@@ -18,7 +18,7 @@ public class LoginView extends JFrame {
         frame.add(panel);
         panel.setLayout(null);
 
-        JLabel userLabel = new JLabel("User");
+        JLabel userLabel = new JLabel("Username");
         userLabel.setBounds(10, 20, 80, 25);
         panel.add(userLabel);
 
@@ -35,6 +35,7 @@ public class LoginView extends JFrame {
         panel.add(passwordText);
 
         loginButton = new JButton("Login");
+        loginButton.addActionListener(_ -> frame.setVisible(false));
         loginButton.setBounds(70, 90, 80, 25);
         panel.add(loginButton);
 
@@ -43,10 +44,7 @@ public class LoginView extends JFrame {
         panel.add(registerLabel);
 
         registerButton = new JButton("Register");
-        registerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
+        registerButton.addActionListener(_ -> frame.setVisible(false));
         registerButton.setBounds(155, 130, 80, 25);
         panel.add(registerButton);
 

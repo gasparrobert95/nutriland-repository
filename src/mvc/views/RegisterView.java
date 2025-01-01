@@ -1,10 +1,17 @@
 package mvc.views;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RegisterView extends JFrame {
     private JButton registerButton;
+    private JTextField nameText;
+    private JTextField usernameText;
+    private JPasswordField passwordText;
+    private JPasswordField repeatPasswordText;
+    private JRadioButton clientButton;
+    private JRadioButton affiliateButton;
 
     public RegisterView() {
         JFrame frame = new JFrame();
@@ -20,7 +27,7 @@ public class RegisterView extends JFrame {
         nameLabel.setBounds(10, 20, 80, 25);
         panel.add(nameLabel);
 
-        JTextField nameText = new JTextField(20);
+        nameText = new JTextField(20);
         nameText.setBounds(100, 20, 165, 25);
         panel.add(nameText);
 
@@ -28,7 +35,7 @@ public class RegisterView extends JFrame {
         usernameLabel.setBounds(10, 50, 80, 25);
         panel.add(usernameLabel);
 
-        JTextField usernameText = new JTextField(20);
+        usernameText = new JTextField(20);
         usernameText.setBounds(100, 50, 165, 25);
         panel.add(usernameText);
 
@@ -36,7 +43,7 @@ public class RegisterView extends JFrame {
         passwordLabel.setBounds(10, 80, 80, 25);
         panel.add(passwordLabel);
 
-        JPasswordField passwordText = new JPasswordField();
+        passwordText = new JPasswordField();
         passwordText.setBounds(100, 80, 165, 25);
         panel.add(passwordText);
 
@@ -44,19 +51,19 @@ public class RegisterView extends JFrame {
         repeatPasswordLabel.setBounds(10, 110, 80, 25);
         panel.add(repeatPasswordLabel);
 
-        JPasswordField repeatPasswordText = new JPasswordField();
+        repeatPasswordText = new JPasswordField();
         repeatPasswordText.setBounds(100, 110, 165, 25);
         panel.add(repeatPasswordText);
 
-        JLabel genderText = new JLabel("User Type");
-        genderText.setBounds(15, 150, 165, 25);
-        panel.add(genderText);
+        JLabel userTypeText = new JLabel("User Type");
+        userTypeText.setBounds(15, 150, 165, 25);
+        panel.add(userTypeText);
 
-        JRadioButton clientButton = new JRadioButton("Client");
+        clientButton = new JRadioButton("Client");
         clientButton.setBounds(85,150,70,25);
         panel.add(clientButton);
 
-        JRadioButton affiliateButton = new JRadioButton("Affiliate");
+        affiliateButton = new JRadioButton("Affiliate");
         affiliateButton.setBounds(155,150,85,25);
         panel.add(affiliateButton);
 
@@ -65,13 +72,40 @@ public class RegisterView extends JFrame {
         group.add(affiliateButton);
 
         registerButton = new JButton("Sign Up");
+        //registerButton.addActionListener(_ -> frame.setVisible(false));
         registerButton.setBounds(85, 190, 80, 25);
         panel.add(registerButton);
 
         frame.setVisible(true);
     }
 
-    public void registerButtonListener(ActionListener actionListener) {
+    public void addRegisterButtonListener(ActionListener actionListener) {
         registerButton.addActionListener(actionListener);
     }
+
+    public String getName() {return nameText.getText();}
+
+    public String getUsername() {return usernameText.getText();}
+
+    public String getPassword() {return passwordText.getText();}
+
+    public int getUserType() {return clientButton.isSelected() ? 1 : 2;}
+
+    public void showSuccessfulMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "SUCCESSFULLY CREATED ACCOUNT", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void clearData() {
+        nameText.setText("");
+        usernameText.setText("");
+        passwordText.setText("");
+        repeatPasswordText.setText("");
+        clientButton.setSelected(false);
+        affiliateButton.setSelected(false);
+    }
+
 }
