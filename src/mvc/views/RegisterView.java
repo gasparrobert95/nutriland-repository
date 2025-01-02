@@ -1,10 +1,13 @@
 package mvc.views;
 
+import mvc.exceptions.ExceptionDifferentPasswords;
+import mvc.exceptions.ExceptionMissingDetail;
+
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RegisterView extends JFrame {
+    private JFrame frame = new JFrame();
     private JButton registerButton;
     private JTextField nameText;
     private JTextField usernameText;
@@ -14,7 +17,7 @@ public class RegisterView extends JFrame {
     private JRadioButton affiliateButton;
 
     public RegisterView() {
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setTitle("NUTRILAND");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,11 +75,14 @@ public class RegisterView extends JFrame {
         group.add(affiliateButton);
 
         registerButton = new JButton("Sign Up");
-        //registerButton.addActionListener(_ -> frame.setVisible(false));
         registerButton.setBounds(85, 190, 80, 25);
         panel.add(registerButton);
 
         frame.setVisible(true);
+    }
+
+    public void closeWindow() {
+        frame.setVisible(false);
     }
 
     public void addRegisterButtonListener(ActionListener actionListener) {
@@ -89,7 +95,13 @@ public class RegisterView extends JFrame {
 
     public String getPassword() {return passwordText.getText();}
 
-    public int getUserType() {return clientButton.isSelected() ? 1 : 2;}
+    public String getRepeatPassword() {return repeatPasswordText.getText();}
+
+    public int getUserType() {
+        if (!clientButton.isSelected() && !affiliateButton.isSelected())
+            return -1;
+        return clientButton.isSelected() ? 1 : 2;
+    }
 
     public void showSuccessfulMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "SUCCESSFULLY CREATED ACCOUNT", JOptionPane.INFORMATION_MESSAGE);
@@ -97,6 +109,18 @@ public class RegisterView extends JFrame {
 
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void checkValidAccount() throws ExceptionMissingDetail {
+        if (getName().equals("") || getUsername().equals("") || getPassword().equals("") || getRepeatPassword().equals("") || getUserType() == -1) {
+            throw new ExceptionMissingDetail();
+        }
+    }
+
+    public void checkPasswords() throws ExceptionDifferentPasswords {
+        if (!getPassword().equals(getRepeatPassword())) {
+            throw new ExceptionDifferentPasswords();
+        }
     }
 
     public void clearData() {
