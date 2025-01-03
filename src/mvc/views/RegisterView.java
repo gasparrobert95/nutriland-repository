@@ -18,7 +18,7 @@ public class RegisterView extends JFrame {
 
     public RegisterView() {
         frame = new JFrame();
-        frame.setTitle("NUTRILAND");
+        frame.setTitle("NUTRILAND - REGISTER");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

@@ -3,9 +3,11 @@ package mvc.controllers;
 import mvc.DatabaseConnection;
 import mvc.exceptions.ExceptionInvalidAccount;
 import mvc.exceptions.ExceptionMissingDetail;
+import mvc.models.ClientModel;
 import mvc.models.UserModel;
 import mvc.views.LoginView;
 import mvc.views.RegisterView;
+import mvc.views.ShopView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,13 +38,22 @@ public class LoginController {
                     loginView.clearData();
                     throw new ExceptionInvalidAccount();
                 }
-                int id = result.getInt(1);
                 String name = result.getString(2);
                 String username = result.getString(3);
                 String password = result.getString(4);
                 int userType = result.getInt(5);
-                UserModel user = new UserModel(id, name, username, password, userType);
+                UserModel user = new UserModel(name, username, password, userType);
+                connection.close();
                 //enter shop
+                if (userType == 1) {
+                    ShopView shopView = new ShopView();
+                    ClientModel client = new ClientModel(user);
+                    ShopController ShopController = new ShopController(shopView, client, databaseConnection);
+                } else {
+                    /*AffiliateView affiliateView = new AffiliateView();
+                    AffiliateModel affiliate = new AffiliateModel(user);
+                    AffiliateController affiliateController = new AffiliateController(affiliateView, affiliate, databaseConnection);*/
+                }
                 loginView.closeWindow();
             } catch (ExceptionMissingDetail exception) {
                 loginView.showErrorMessage(exception.getMessage());

@@ -14,7 +14,7 @@ public class LoginView extends JFrame {
 
     public LoginView() {
         frame = new JFrame();
-        frame.setTitle("NUTRILAND");
+        frame.setTitle("NUTRILAND - LOG IN");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
