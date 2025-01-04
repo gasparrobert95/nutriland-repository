@@ -5,12 +5,14 @@ public class ProductModel {
     private String name;
     private double price;
     private int quantity;
+    private String imageName;
 
-    public ProductModel(int id, String name, double price, int quantity) {
+    public ProductModel(int id, String name, double price, int quantity, String imageName) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.imageName = imageName;
     }
 
     public int getId() {return id;}
@@ -28,4 +30,8 @@ public class ProductModel {
     public int getQuantity() {return quantity;}
 
     public void setQuantity(int quantity) {this.quantity = quantity;}
+
+    public String getImageName() {return imageName;}
+
+    public void setImageName(String imageName) {this.imageName = imageName;}
 }

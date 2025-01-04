@@ -3,6 +3,7 @@ package mvc.views;
 import mvc.exceptions.ExceptionMissingDetail;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class LoginView extends JFrame {
@@ -17,40 +18,60 @@ public class LoginView extends JFrame {
         frame.setTitle("NUTRILAND - LOG IN");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(new BorderLayout());
+
+        JPanel header = new JPanel(new FlowLayout());
+        header.setBackground(Color.WHITE);
+        frame.add(header, BorderLayout.NORTH);
+
+        ImageIcon imageIcon = new ImageIcon("/Users/gasparrobert95/IdeaProjects/NUTRILAND/images/logo.png");
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(200,200, Image.SCALE_DEFAULT));
+        JLabel imageLabel = new JLabel(imageIcon, JLabel.CENTER);
+        header.add(imageLabel);
 
         JPanel panel = new JPanel();
-        frame.add(panel);
-        panel.setLayout(null);
+        panel.setBackground(Color.WHITE);
+        panel.setLayout(new GridBagLayout());
+        frame.add(panel, BorderLayout.CENTER);
 
-        JLabel userLabel = new JLabel("Username");
-        userLabel.setBounds(10, 20, 80, 25);
-        panel.add(userLabel);
+        panel.add(new JLabel("Username"), createGbc(0, 0));
 
-        usernameText = new JTextField(20);
-        usernameText.setBounds(100, 20, 165, 25);
-        panel.add(usernameText);
+        usernameText = new JTextField(10);
+        panel.add(usernameText, createGbc(1, 0));
 
-        JLabel passwordLabel = new JLabel("Password");
-        passwordLabel.setBounds(10, 50, 80, 25);
-        panel.add(passwordLabel);
+        panel.add(new JLabel("Password"), createGbc(0, 1));
 
-        passwordText = new JPasswordField();
-        passwordText.setBounds(100, 50, 165, 25);
-        panel.add(passwordText);
+        passwordText = new JPasswordField(10);
+        panel.add(passwordText, createGbc(1, 1));
 
         loginButton = new JButton("Login");
-        loginButton.setBounds(70, 90, 80, 25);
-        panel.add(loginButton);
+        panel.add(loginButton, createGbc(0, 2));
 
-        JLabel registerLabel = new JLabel("Not a member yet? -> ");
-        registerLabel.setBounds(10, 130, 180, 25);
-        panel.add(registerLabel);
+        JPanel footer = new JPanel(new FlowLayout());
+        footer.setBackground(Color.WHITE);
+        frame.add(footer, BorderLayout.SOUTH);
+
+        JLabel registerLabel = new JLabel("Not a member yet?  -> ");
+        registerLabel.setForeground(Color.BLUE);
+        footer.add(registerLabel);
 
         registerButton = new JButton("Register");
-        registerButton.setBounds(155, 130, 80, 25);
-        panel.add(registerButton);
+        footer.add(registerButton);
 
         frame.setVisible(true);
+    }
+
+    private static GridBagConstraints createGbc(int x, int y) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = x;
+        gbc.gridy = y;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 1;
+        //int gap = 3;
+        //gbc.insets = new Insets(gap, gap + 2 * gap * x, gap, gap);
+        return gbc;
     }
 
     public void closeWindow() {

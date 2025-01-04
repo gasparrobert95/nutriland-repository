@@ -21,6 +21,7 @@ public class RegisterView extends JFrame {
         frame.setTitle("NUTRILAND - REGISTER");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         frame.add(panel);

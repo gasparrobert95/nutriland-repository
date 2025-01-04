@@ -20,7 +20,6 @@ public class ShopController {
         this.client = client;
         this.databaseConnection = databaseConnection;
         transferProducts();
-        shopView.showProducts(50, 60);
     }
 
     public void transferProducts() throws Exception {
@@ -36,9 +35,11 @@ public class ShopController {
             String name = result.getString(2);
             double price = result.getDouble(3);
             int quantity = result.getInt(4);
-            products.add(new ProductModel(id, name, price, quantity));
+            String imageName = result.getString(5);
+            products.add(new ProductModel(id, name, price, quantity, imageName));
         }
         shopView.setProducts(products);
+        shopView.showProducts();
         connection.close();
     }
 
