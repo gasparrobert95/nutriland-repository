@@ -5,7 +5,6 @@ import mvc.models.ProductModel;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -21,6 +20,8 @@ public class CartView extends JFrame {
     private double totalPrice = 0;
 
     public CartView() {
+        products = new ArrayList<>();
+
         frame = new JFrame();
         frame.setTitle("NUTRILAND - CART");
         frame.setSize(800, 600);
@@ -67,8 +68,8 @@ public class CartView extends JFrame {
         int line = 0;
         for (var product : products) {
             data[line][0] = product.getName();
-            data[line][1] = "1";
-            data[line][2] = String.valueOf(product.getPrice());
+            data[line][1] = String.valueOf(product.getQuantity());
+            data[line][2] = String.format("%.2f RON", product.getPrice());
             totalPrice += product.getPrice();
             ++line;
         }

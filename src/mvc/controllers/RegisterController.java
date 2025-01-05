@@ -48,15 +48,9 @@ public class RegisterController {
                 registerView.showSuccessfulMessage("The account was successfully created!");
                 UserModel user = new UserModel(registerView.getName(), registerView.getUsername(), registerView.getPassword(), registerView.getUserType());
                 //enter shop
-                if (registerView.getUserType() == 1) {
-                    ShopView shopView = new ShopView();
-                    ClientModel client = new ClientModel(user);
-                    ShopController ShopController = new ShopController(shopView, client, databaseConnection);
-                } else {
-                    /*AffiliateView affiliateView = new AffiliateView();
-                    AffiliateModel affiliate = new AffiliateModel(user);
-                    AffiliateController affiliateController = new AffiliateController(affiliateView, affiliate, databaseConnection);*/
-                }
+                ShopView shopView = new ShopView();
+                ClientModel client = new ClientModel(user);
+                ShopController ShopController = new ShopController(shopView, client, databaseConnection);
                 registerView.closeWindow();
             } catch (ExceptionMissingDetail exception) {
                 registerView.showErrorMessage(exception.getMessage());

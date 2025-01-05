@@ -1,5 +1,6 @@
 package mvc.views;
 
+import mvc.models.CartProductModel;
 import mvc.models.ProductModel;
 
 import javax.swing.*;
@@ -9,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShopView extends JFrame {
     private JFrame frame;
@@ -16,7 +19,7 @@ public class ShopView extends JFrame {
     private JPanel panel;
     private JButton cartButton;
     private ArrayList<ProductModel> products;
-    private ArrayList<Integer> cart;
+    private ArrayList<CartProductModel> cart;
 
     public ShopView() {
         products = new ArrayList<>();
@@ -79,27 +82,13 @@ public class ShopView extends JFrame {
             panel.add(Box.createRigidArea(new Dimension(70, 15)));
             panel.add(priceLabel);
 
-            /*JSpinner quantitySpinner = new JSpinner();
-            quantitySpinner.setValue(1);
-            quantitySpinner.addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    double q = Double.parseDouble((String) quantitySpinner.getValue());
-                    priceLabel.setText(Double.toString(q * product.getPrice()) + " RON");
-                    //priceLabel.setText(String.format("%.2f RON", quantitySpinner.getValue()));
-                }
-            });
-            panel.add(quantitySpinner);*/
-
-            //panel.add(Box.createRigidArea(new Dimension(70, 15)));
-
             JLabel stockLabel = new JLabel();
             if (product.getQuantity() > 3) {
                 stockLabel.setText("In stock");
                 stockLabel.setForeground(new Color(80, 200, 120));
             }
             else if (product.getQuantity() > 1) {
-                stockLabel.setText(String.valueOf(product.getQuantity()) + " left");
+                stockLabel.setText(product.getQuantity() + " left");
                 stockLabel.setForeground(Color.ORANGE);
             }
             else {
@@ -108,11 +97,25 @@ public class ShopView extends JFrame {
             }
             panel.add(Box.createRigidArea(new Dimension(70, 15)));
             panel.add(stockLabel);
+            panel.add(Box.createRigidArea(new Dimension(70, 15)));
+
 
             if (product.getQuantity() > 0) {
+                int maximumStock = product.getQuantity();
+                JSpinner quantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, maximumStock, 1));
+                quantitySpinner.setMaximumSize(new Dimension(100, quantitySpinner.getPreferredSize().height));
+                panel.add(quantitySpinner);
+
                 panel.add(Box.createRigidArea(new Dimension(70, 15)));
                 JButton addButton = new JButton();
-                if (cart.contains(product.getId()))
+                boolean inCart = false;
+                for (var prod : cart) {
+                    if (prod.getId().equals(product.getId())) {
+                        inCart = true;
+                        break;
+                    }
+                }
+                if (inCart)
                     addButton.setText("In Cart");
                 else
                     addButton.setText("Add Product");
@@ -120,12 +123,25 @@ public class ShopView extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
-                            if (cart.contains(product.getId())) {
-                                cart.remove((Integer) product.getId());
+                            int q = (int) quantitySpinner.getValue();
+                            boolean inCart = false;
+                            for (var prod : cart) {
+                                if (prod.getId().equals(product.getId())) {
+                                    inCart = true;
+                                    break;
+                                }
+                            }
+                            if (inCart) {
+                                for (var prod : cart) {
+                                    if (prod.getId().equals(product.getId())) {
+                                        cart.remove(prod);
+                                        break;
+                                    }
+                                }
                                 addButton.setText("Add Product");
                             }
-                            else {
-                                cart.add(product.getId());
+                            else if (q > 0) {
+                                cart.add(new CartProductModel(product.getId(), q));
                                 addButton.setText("In Cart");
                             }
                         } catch (Exception exception) {
@@ -140,19 +156,15 @@ public class ShopView extends JFrame {
         frame.setVisible(true);
     }
 
-    public void showSuccessfulMessage(String message) {
-        JOptionPane.showMessageDialog(this, message, "INFO", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
     }
 
     public void setProducts(ArrayList<ProductModel> products) {this.products = products;}
 
-    public ArrayList<Integer> getCart() {return cart;}
+    public ArrayList<CartProductModel> getCart() {return cart;}
 
-    public void setCart(ArrayList<Integer> cart) {this.cart = cart;}
+    public void setCart(ArrayList<CartProductModel> cart) {this.cart = cart;}
 
     public void addCartButtonListener(ActionListener actionListener) {
         cartButton.addActionListener(actionListener);

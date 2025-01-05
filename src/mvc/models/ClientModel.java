@@ -1,10 +1,12 @@
 package mvc.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientModel {
     private UserModel user;
-    private ArrayList<Integer> cart;
+    private ArrayList<CartProductModel> cart;
 
     public ClientModel(UserModel user) {
         this.user = user;
@@ -15,7 +17,7 @@ public class ClientModel {
 
     public void setUser(UserModel user) {this.user = user;}
 
-    public ArrayList<Integer> getCart() {return cart;}
+    public ArrayList<CartProductModel> getCart() {return cart;}
 
-    public void setCart(ArrayList<Integer> cart) {this.cart = cart;}
+    public void setCart(ArrayList<CartProductModel> cart) {this.cart = cart;}
 }

@@ -5,6 +5,7 @@ import mvc.exceptions.ExceptionInvalidAccount;
 import mvc.exceptions.ExceptionMissingDetail;
 import mvc.models.ClientModel;
 import mvc.models.UserModel;
+import mvc.views.AdminView;
 import mvc.views.LoginView;
 import mvc.views.RegisterView;
 import mvc.views.ShopView;
@@ -32,36 +33,36 @@ public class LoginController {
                 Connection connection = databaseConnection.getConnection();
                 Statement statement = connection.createStatement();
                 String query = String.format("select * from \"Users\" where username = '%s' and password = '%s';", loginView.getUsername(), loginView.getPassword());
-                loginView.checkValidAccount();
-                ResultSet result = statement.executeQuery(query);
-                if (!result.next()) {
-                    loginView.clearData();
-                    throw new ExceptionInvalidAccount();
-                }
-                String name = result.getString(2);
-                String username = result.getString(3);
-                String password = result.getString(4);
-                int userType = result.getInt(5);
-                UserModel user = new UserModel(name, username, password, userType);
-                connection.close();
-                //enter shop
-                if (userType == 1) {
+                if (loginView.getUsername().equals("admin") && loginView.getPassword().equals("admin")) {
+                    AdminView adminView = new AdminView();
+                    AdminController adminController = new AdminController(adminView, databaseConnection);
+                    loginView.closeWindow();
+                } else {
+                    loginView.checkValidAccount();
+                    ResultSet result = statement.executeQuery(query);
+                    if (!result.next()) {
+                        loginView.clearData();
+                        throw new ExceptionInvalidAccount();
+                    }
+                    String name = result.getString(2);
+                    String username = result.getString(3);
+                    String password = result.getString(4);
+                    int userType = result.getInt(5);
+                    UserModel user = new UserModel(name, username, password, userType);
+                    connection.close();
+                    //enter shop
                     ShopView shopView = new ShopView();
                     ClientModel client = new ClientModel(user);
                     ShopController ShopController = new ShopController(shopView, client, databaseConnection);
-                } else {
-                    /*AffiliateView affiliateView = new AffiliateView();
-                    AffiliateModel affiliate = new AffiliateModel(user);
-                    AffiliateController affiliateController = new AffiliateController(affiliateView, affiliate, databaseConnection);*/
+                    loginView.closeWindow();
                 }
-                loginView.closeWindow();
-            } catch (ExceptionMissingDetail exception) {
+            } catch(ExceptionMissingDetail exception){
                 loginView.showErrorMessage(exception.getMessage());
                 exception.printStackTrace();
-            } catch (ExceptionInvalidAccount exception) {
+            } catch(ExceptionInvalidAccount exception){
                 loginView.showErrorMessage(exception.getMessage());
                 exception.printStackTrace();
-            } catch (Exception exception) {
+            } catch(Exception exception){
                 loginView.showErrorMessage("Something went wrong!");
                 exception.printStackTrace();
             }

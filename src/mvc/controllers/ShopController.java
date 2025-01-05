@@ -58,9 +58,9 @@ public class ShopController {
             int id = result.getInt(1);
             String name = result.getString(2);
             double price = result.getDouble(3);
-            int quantity = result.getInt(4);
+            int q = result.getInt(4);
             String imageName = result.getString(5);
-            products.add(new ProductModel(id, name, price, quantity, imageName));
+            products.add(new ProductModel(id, name, price, q, imageName));
         }
         shopView.setProducts(products);
         shopView.showProducts();
