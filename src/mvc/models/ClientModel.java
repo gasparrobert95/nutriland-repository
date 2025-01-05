@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ClientModel {
     private UserModel user;
-    private ArrayList<ProductModel> cart;
+    private ArrayList<Integer> cart;
 
     public ClientModel(UserModel user) {
         this.user = user;
@@ -15,7 +15,7 @@ public class ClientModel {
 
     public void setUser(UserModel user) {this.user = user;}
 
-    public ArrayList<ProductModel> getCart() {return cart;}
+    public ArrayList<Integer> getCart() {return cart;}
 
-    public void setCart(ArrayList<ProductModel> cart) {this.cart = cart;}
+    public void setCart(ArrayList<Integer> cart) {this.cart = cart;}
 }

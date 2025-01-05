@@ -1,10 +1,14 @@
 package mvc.controllers;
 
 import mvc.DatabaseConnection;
+import mvc.exceptions.ExceptionEmptyCart;
 import mvc.models.ClientModel;
 import mvc.models.ProductModel;
+import mvc.views.CartView;
 import mvc.views.ShopView;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -19,7 +23,27 @@ public class ShopController {
         this.shopView = shopView;
         this.client = client;
         this.databaseConnection = databaseConnection;
+        this.shopView.addCartButtonListener(new CartListener());
+        this.shopView.setCart(client.getCart());
         transferProducts();
+    }
+
+    class CartListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            try {
+                client.setCart(shopView.getCart());
+                if (client.getCart().isEmpty())
+                    throw new ExceptionEmptyCart();
+                CartView cartView = new CartView();
+                CartController cartController = new CartController(cartView, client, databaseConnection);
+                shopView.closeWindow();
+            } catch (ExceptionEmptyCart exception) {
+                shopView.showErrorMessage(exception.getMessage());
+                exception.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
     }
 
     public void transferProducts() throws Exception {

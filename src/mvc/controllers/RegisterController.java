@@ -6,6 +6,7 @@ import mvc.exceptions.ExceptionExistingAccount;
 import mvc.exceptions.ExceptionMissingDetail;
 import mvc.models.ClientModel;
 import mvc.models.UserModel;
+import mvc.views.LoginView;
 import mvc.views.RegisterView;
 import mvc.views.ShopView;
 
@@ -22,6 +23,7 @@ public class RegisterController {
     public RegisterController(RegisterView registerView, DatabaseConnection databaseConnection) {
         this.registerView = registerView;
         this.registerView.addRegisterButtonListener(new RegisterListener());
+        this.registerView.addBackButtonListener(new BackListener());
         this.databaseConnection = databaseConnection;
     }
 
@@ -69,6 +71,14 @@ public class RegisterController {
                 registerView.showErrorMessage("Something went wrong!");
                 exception.printStackTrace();
             }
+        }
+    }
+
+    class BackListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            LoginView loginView = new LoginView();
+            LoginController loginController = new LoginController(loginView, databaseConnection);
+            registerView.closeWindow();
         }
     }
 }

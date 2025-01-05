@@ -30,48 +30,51 @@ public class LoginView extends JFrame {
         JLabel imageLabel = new JLabel(imageIcon, JLabel.CENTER);
         header.add(imageLabel);
 
+        JPanel center = new JPanel();
+        center.setBackground(Color.WHITE);
+        center.setLayout(new BoxLayout(center, BoxLayout.PAGE_AXIS));
+        frame.add(center, BorderLayout.CENTER);
+
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
-        panel.setLayout(new GridBagLayout());
-        frame.add(panel, BorderLayout.CENTER);
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
+        center.add(panel);
 
-        panel.add(new JLabel("Username"), createGbc(0, 0));
+        JLabel emptyLine = new JLabel("");
+        emptyLine.setPreferredSize(new Dimension(3000,15));
+
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.WHITE);
+        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
+        center.add(panel2);
+
+        panel.add(new JLabel("Username"));
 
         usernameText = new JTextField(10);
-        panel.add(usernameText, createGbc(1, 0));
+        panel.add(usernameText);
 
-        panel.add(new JLabel("Password"), createGbc(0, 1));
+        panel.add(emptyLine);
+
+        panel.add(new JLabel("Password"));
 
         passwordText = new JPasswordField(10);
-        panel.add(passwordText, createGbc(1, 1));
+        panel.add(passwordText);
 
         loginButton = new JButton("Login");
-        panel.add(loginButton, createGbc(0, 2));
+        panel2.add(loginButton);
 
         JPanel footer = new JPanel(new FlowLayout());
-        footer.setBackground(Color.WHITE);
+        footer.setBackground(Color.BLACK);
         frame.add(footer, BorderLayout.SOUTH);
 
         JLabel registerLabel = new JLabel("Not a member yet?  -> ");
-        registerLabel.setForeground(Color.BLUE);
+        registerLabel.setForeground(Color.WHITE);
         footer.add(registerLabel);
 
         registerButton = new JButton("Register");
         footer.add(registerButton);
 
         frame.setVisible(true);
-    }
-
-    private static GridBagConstraints createGbc(int x, int y) {
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = x;
-        gbc.gridy = y;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        //int gap = 3;
-        //gbc.insets = new Insets(gap, gap + 2 * gap * x, gap, gap);
-        return gbc;
     }
 
     public void closeWindow() {

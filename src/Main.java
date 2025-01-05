@@ -8,13 +8,13 @@ import mvc.views.ShopView;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        LoginView loginView = new LoginView();
+        //LoginView loginView = new LoginView();
         DatabaseConnection databaseConnection = new DatabaseConnection();
-        LoginController loginController = new LoginController(loginView, databaseConnection);
+        //LoginController loginController = new LoginController(loginView, databaseConnection);
 
-        /*ShopView shopView = new ShopView();
+        ShopView shopView = new ShopView();
         UserModel user = new UserModel("a", "a", "a", 1);
         ClientModel client = new ClientModel(user);
-        ShopController ShopController = new ShopController(shopView, client, databaseConnection);*/
+        ShopController ShopController = new ShopController(shopView, client, databaseConnection);
     }
 }

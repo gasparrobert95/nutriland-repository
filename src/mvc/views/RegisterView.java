@@ -4,11 +4,13 @@ import mvc.exceptions.ExceptionDifferentPasswords;
 import mvc.exceptions.ExceptionMissingDetail;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class RegisterView extends JFrame {
-    private JFrame frame = new JFrame();
+    private JFrame frame;
     private JButton registerButton;
+    private JButton backButton;
     private JTextField nameText;
     private JTextField usernameText;
     private JPasswordField passwordText;
@@ -22,62 +24,93 @@ public class RegisterView extends JFrame {
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        frame.setLayout(new BorderLayout());
+
+        JPanel header = new JPanel(new FlowLayout());
+        header.setBackground(Color.WHITE);
+        frame.add(header, BorderLayout.NORTH);
+
+        ImageIcon imageIcon = new ImageIcon("/Users/gasparrobert95/IdeaProjects/NUTRILAND/images/logo.png");
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(200,200, Image.SCALE_DEFAULT));
+        JLabel imageLabel = new JLabel(imageIcon, JLabel.CENTER);
+        header.add(imageLabel);
 
         JPanel panel = new JPanel();
-        frame.add(panel);
-        panel.setLayout(null);
+        panel.setBackground(Color.WHITE);
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        frame.add(panel, BorderLayout.CENTER);
 
-        JLabel nameLabel = new JLabel("Full Name");
-        nameLabel.setBounds(10, 20, 80, 25);
+        JLabel emptyLine1 = new JLabel("");
+        emptyLine1.setPreferredSize(new Dimension(3000,15));
+        JLabel emptyLine2 = new JLabel("");
+        emptyLine2.setPreferredSize(new Dimension(3000,15));
+        JLabel emptyLine3 = new JLabel("");
+        emptyLine3.setPreferredSize(new Dimension(3000,15));
+        JLabel emptyLine4 = new JLabel("");
+        emptyLine4.setPreferredSize(new Dimension(3000,15));
+        JLabel emptyLine5 = new JLabel("");
+        emptyLine5.setPreferredSize(new Dimension(3000,45));
+
+        JLabel nameLabel = new JLabel("Full Name           ");
         panel.add(nameLabel);
 
-        nameText = new JTextField(20);
-        nameText.setBounds(100, 20, 165, 25);
+        nameText = new JTextField(10);
         panel.add(nameText);
 
-        JLabel usernameLabel = new JLabel("Username");
-        usernameLabel.setBounds(10, 50, 80, 25);
+        panel.add(emptyLine1);
+
+        JLabel usernameLabel = new JLabel("Username           ");
         panel.add(usernameLabel);
 
-        usernameText = new JTextField(20);
-        usernameText.setBounds(100, 50, 165, 25);
+        usernameText = new JTextField(10);
         panel.add(usernameText);
 
-        JLabel passwordLabel = new JLabel("Password");
-        passwordLabel.setBounds(10, 80, 80, 25);
+        panel.add(emptyLine2);
+
+        JLabel passwordLabel = new JLabel("Password           ");
         panel.add(passwordLabel);
 
-        passwordText = new JPasswordField();
-        passwordText.setBounds(100, 80, 165, 25);
+        passwordText = new JPasswordField(10);
         panel.add(passwordText);
 
+        panel.add(emptyLine3);
+
         JLabel repeatPasswordLabel = new JLabel("Repeat Password");
-        repeatPasswordLabel.setBounds(10, 110, 80, 25);
         panel.add(repeatPasswordLabel);
 
-        repeatPasswordText = new JPasswordField();
-        repeatPasswordText.setBounds(100, 110, 165, 25);
+        repeatPasswordText = new JPasswordField(10);
         panel.add(repeatPasswordText);
 
+        panel.add(emptyLine4);
+
         JLabel userTypeText = new JLabel("User Type");
-        userTypeText.setBounds(15, 150, 165, 25);
         panel.add(userTypeText);
 
         clientButton = new JRadioButton("Client");
-        clientButton.setBounds(85,150,70,25);
         panel.add(clientButton);
 
         affiliateButton = new JRadioButton("Affiliate");
-        affiliateButton.setBounds(155,150,85,25);
         panel.add(affiliateButton);
 
         ButtonGroup group = new ButtonGroup();
         group.add(clientButton);
         group.add(affiliateButton);
 
+        panel.add(emptyLine5);
+
         registerButton = new JButton("Sign Up");
-        registerButton.setBounds(85, 190, 80, 25);
         panel.add(registerButton);
+
+        backButton = new JButton("Back");
+        panel.add(backButton);
+
+        JPanel footer = new JPanel(new FlowLayout());
+        footer.setBackground(Color.BLACK);
+        frame.add(footer, BorderLayout.SOUTH);
+
+        JLabel welcomeText = new JLabel("WELCOME TO NUTRILAND!");
+        welcomeText.setForeground(Color.WHITE);
+        footer.add(welcomeText);
 
         frame.setVisible(true);
     }
@@ -88,6 +121,10 @@ public class RegisterView extends JFrame {
 
     public void addRegisterButtonListener(ActionListener actionListener) {
         registerButton.addActionListener(actionListener);
+    }
+
+    public void addBackButtonListener(ActionListener actionListener) {
+        backButton.addActionListener(actionListener);
     }
 
     public String getName() {return nameText.getText();}
